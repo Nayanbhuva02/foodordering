@@ -4,19 +4,20 @@ import { Link, Stack, useLocalSearchParams } from 'expo-router'
 import { products } from '@/assets/data/products'
 import { FontAwesome } from '@expo/vector-icons'
 import Colors from '@/constants/Colors'
+import { useProduct } from '@/api/products'
+import { defaultPizzaImage } from '@/constants/Images'
+import RemoteImage from '@/components/RemoteImage'
 
 
 const ProductDetails = () => {
-    const { id } = useLocalSearchParams()
+    const { id: idString } = useLocalSearchParams()
+    const id = parseFloat(typeof idString === "string" ? idString : idString[0])
 
-    const product = useMemo(() => {
-        return products.find(val => val?.id?.toString() === id)
-    }, [id])
-
+    const { data: product } = useProduct(id);
 
     return (
         <View style={styles.container}>
-            <Stack.Screen options={{ title: product?.name }} />
+            <Stack.Screen options={{ title: product?.name || "" }} />
             <Stack.Screen options={{
                 title: "Menu ", headerRight: () => (
                     <Link href={`/(admin)/menu/create?id=${id}`} asChild>
@@ -34,9 +35,11 @@ const ProductDetails = () => {
                 )
             }} />
 
-
-
-            <Image source={{ uri: product?.image }} style={styles.image} />
+            <RemoteImage
+                path={product?.image}
+                fallback={defaultPizzaImage}
+                style={styles.image}
+            />
 
             <View>
                 <Text style={styles.price}>Name: {product?.name}</Text>

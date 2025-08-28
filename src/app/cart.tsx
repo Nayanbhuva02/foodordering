@@ -5,8 +5,8 @@ import CartListItem from '@/components/CartListItem'
 import Button from '@/components/Button'
 
 const Cart = () => {
-    const { items, total } = useCart()
-    console.log('item: ', items);
+    const { items, total, onCheckout } = useCart()
+
     return (
         <View style={{ flex: 1, paddingBottom: 20 }}>
             <FlatList
@@ -17,7 +17,7 @@ const Cart = () => {
             />
             {total ? <View style={{ paddingHorizontal: 24 }}>
                 <Text style={{ fontWeight: 600, fontSize: 18, }}>Total: ${total}</Text>
-                <Button text='Checkout' />
+                <Button text='Checkout' onPress={onCheckout} />
             </View> : null}
         </View>
     )

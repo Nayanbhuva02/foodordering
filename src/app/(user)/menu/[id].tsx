@@ -5,29 +5,36 @@ import { products } from '@/assets/data/products'
 import { PizzaSize } from 'types';
 import Button from '@/components/Button';
 import { useCart } from '@/providers/CartProvider';
+import { useProduct } from '@/api/products';
+import { defaultPizzaImage } from '@/constants/Images';
+import RemoteImage from '@/components/RemoteImage';
 
 const sizes: PizzaSize[] = ['S', 'M', 'L', 'XL'];
 
 const ProductDetails = () => {
-    const { id } = useLocalSearchParams()
+    const { id: idString } = useLocalSearchParams()
+    const id = parseFloat(typeof idString === "string" ? idString : idString[0])
     const { addItem } = useCart();
 
-    const [selectedSize, setSelectedSize] = useState<PizzaSize>('M')
+    const { data: product } = useProduct(id);
 
-    const product = useMemo(() => {
-        return products.find(val => val?.id?.toString() === id)
-    }, [id])
+    const [selectedSize, setSelectedSize] = useState<PizzaSize>('M')
 
     const onAddCart = () => {
         if (!product || !selectedSize) return
         addItem(product, selectedSize)
     }
 
+
     return (
         <View style={styles.container}>
-            <Stack.Screen options={{ title: product?.name }} />
+            <Stack.Screen options={{ title: product?.name || "" }} />
 
-            <Image source={{ uri: product?.image }} style={styles.image} />
+            <RemoteImage
+                path={product?.image}
+                fallback={defaultPizzaImage}
+                style={styles.image}
+            />
 
             <Text>Select size</Text>
             <View style={styles.sizes}>
