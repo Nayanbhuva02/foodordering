@@ -1,5 +1,6 @@
 import { useInsertOrderItems } from "@/api/order-items";
 import { useInsertOrder } from "@/api/orders";
+import { initialiseStripePaymentSheet, openPaymentSheet } from "@/lib/stripe";
 import { randomUUID } from "expo-crypto";
 import { useRouter } from "expo-router";
 import { createContext, PropsWithChildren, useContext, useState } from "react";
@@ -62,7 +63,11 @@ const CartProvider = ({ children }: PropsWithChildren) => {
         setItems([])
     }
 
-    const onCheckout = () => {
+    const onCheckout = async () => {
+        await initialiseStripePaymentSheet(total * 100);
+        const paid = await openPaymentSheet()
+        if (!paid) return
+
         if (!total) return
         insertOrder({ total }, {
             onSuccess: saveOrderItems,
