@@ -1,41 +1,38 @@
-import { Image } from 'react-native';
-import React, { ComponentProps, useEffect, useState } from 'react';
-import { supabase } from '@/lib/supabase';
+import { Image } from 'react-native'
+import React, { ComponentProps, useEffect, useState } from 'react'
+import { supabase } from '@/lib/supabase'
 
 type RemoteImageProps = {
-    path?: string;
-    fallback: string;
-} & Omit<ComponentProps<typeof Image>, 'source'>;
+  path?: string
+  fallback: string
+} & Omit<ComponentProps<typeof Image>, 'source'>
 
 const RemoteImage = ({ path, fallback, ...imageProps }: RemoteImageProps) => {
-    const [image, setImage] = useState('');
+  const [image, setImage] = useState('')
 
-    useEffect(() => {
-        if (!path) return;
-        (async () => {
-            setImage('');
-            const { data, error } = await supabase.storage
-                .from('product-images')
-                .download(path);
+  useEffect(() => {
+    if (!path) return
+    ;(async () => {
+      setImage('')
+      const { data, error } = await supabase.storage.from('product-images').download(path)
 
-            if (error) {
-                console.log(error);
-            }
+      if (error) {
+        console.log(error)
+      }
 
-            if (data) {
-                const fr = new FileReader();
-                fr.readAsDataURL(data);
-                fr.onload = () => {
-                    setImage(fr.result as string);
-                };
-            }
-        })();
-    }, [path]);
+      if (data) {
+        const fr = new FileReader()
+        fr.readAsDataURL(data)
+        fr.onload = () => {
+          setImage(fr.result as string)
+        }
+      }
+    })()
+  }, [path])
 
-    if (!image) {
-    }
+  if (!image) return
 
-    return <Image source={{ uri: image || fallback }} {...imageProps} />;
-};
+  return <Image source={{ uri: image || fallback }} {...imageProps} />
+}
 
-export default RemoteImage;
+export default RemoteImage

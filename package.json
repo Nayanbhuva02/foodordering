@@ -2,15 +2,17 @@
   "name": "foodordering",
   "main": "expo-router/entry",
   "version": "1.0.0",
+  "type": "module",
   "scripts": {
     "start": "expo start",
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
     "test": "jest --watchAll",
-    "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
-    "lint:fix": "eslint . --ext .js,.jsx,.ts,.tsx --fix",
+     "lint": "eslint \"src/**/*.{js,jsx,ts,tsx}\"",
+    "lint:fix": "eslint \"src/**/*.{js,jsx,ts,tsx}\" --fix",
     "format": "prettier --write .",
+    "type-check": "tsc --noEmit",
     "prepare": "husky"
   },
   "jest": {
@@ -61,6 +63,10 @@
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-expo": "^0.1.4",
     "eslint-plugin-prettier": "^5.5.4",
+    "eslint-plugin-react": "^7.37.5",
+    "eslint-plugin-react-hooks": "^5.2.0",
+    "eslint-plugin-react-native": "^5.0.0",
+    "eslint-plugin-unused-imports": "^4.2.0",
     "husky": "^9.1.7",
     "jest": "^29.2.1",
     "jest-expo": "~53.0.9",
@@ -69,10 +75,9 @@
     "typescript": "~5.8.3"
   },
   "lint-staged": {
-      "src/**/*.{js,jsx,ts,tsx}": [
-        "eslint --fix",
-        "prettier --write"
-      ]
+    "src/**/*.{js,jsx,ts,tsx}": [
+      "npm run lint"
+    ]
   },
   "private": true
 }

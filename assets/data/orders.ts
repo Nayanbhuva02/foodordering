@@ -1,9 +1,8 @@
+import { Order } from 'types'
+import dayjs from 'dayjs'
+import { products } from './products'
 
-import { Order } from 'types';
-import dayjs from 'dayjs';
-import { products } from './products';
-
-const now = dayjs();
+const now = dayjs()
 
 const orders: Order[] = [
   {
@@ -81,6 +80,6 @@ const orders: Order[] = [
       },
     ],
   },
-];
+]
 
-export default orders;
+export default orders

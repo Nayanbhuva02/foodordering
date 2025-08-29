@@ -1,8 +1,7 @@
-import Stripe from "https://esm.sh/stripe@18.5.0?target=deno&deno-std=0.132.0&no-check";
+import Stripe from 'https://esm.sh/stripe@18.5.0?target=deno&deno-std=0.132.0&no-check'
 
-export const stripe = Stripe(Deno.env.get("STRIPE_SECRET_KEY") ?? "", {
+export const stripe = Stripe(Deno.env.get('STRIPE_SECRET_KEY') ?? '', {
   // This is needed to use the Fetch API rather than relying on the Node http
   // package.
   httpClient: Stripe.createFetchHttpClient(),
-
-  })
+})

@@ -1,22 +1,18 @@
-import { View, Text, StyleSheet, Image } from 'react-native';
-import React from 'react';
-import Colors from '../constants/Colors';
-import { defaultPizzaImage } from '@/constants/Images';
-import { Tables } from 'types';
-import RemoteImage from './RemoteImage';
+import { View, Text, StyleSheet } from 'react-native'
+import React from 'react'
+import Colors from '../constants/Colors'
+import { defaultPizzaImage } from '@/constants/Images'
+import { Tables } from 'types'
+import RemoteImage from './RemoteImage'
 
 type OrderItemListItemProps = {
-  item: { products: Tables<"products"> } & Tables<"order_items">;
-};
+  item: { products: Tables<'products'> } & Tables<'order_items'>
+}
 
 const OrderItemListItem = ({ item }: OrderItemListItemProps) => {
   return (
     <View style={styles.container}>
-      <RemoteImage
-        path={item.products.image}
-        fallback={defaultPizzaImage}
-        style={styles.image}
-      />
+      <RemoteImage path={item.products.image} fallback={defaultPizzaImage} style={styles.image} />
       <View style={{ flex: 1 }}>
         <Text style={styles.title}>{item.products.name}</Text>
         <View style={styles.subtitleContainer}>
@@ -28,8 +24,8 @@ const OrderItemListItem = ({ item }: OrderItemListItemProps) => {
         <Text style={styles.quantity}>{item.quantity}</Text>
       </View>
     </View>
-  );
-};
+  )
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -70,6 +66,6 @@ const styles = StyleSheet.create({
     color: Colors.light.tint,
     fontWeight: 'bold',
   },
-});
+})
 
-export default OrderItemListItem;
+export default OrderItemListItem

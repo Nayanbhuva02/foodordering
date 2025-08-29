@@ -1,8 +1,7 @@
-import { ActivityIndicator, FlatList, StyleSheet, Text } from 'react-native';
-import { View } from '@/components/Themed';
-import Colors from '@/constants/Colors';
-import ProductListItem from '@/components/ProductListItem';
-import { useProductList } from '@/api/products';
+import { ActivityIndicator, FlatList, StyleSheet, Text } from 'react-native'
+import { View } from '@/components/Themed'
+import ProductListItem from '@/components/ProductListItem'
+import { useProductList } from '@/api/products'
 
 export default function MenuScreen() {
   const { data: products, error, isLoading } = useProductList()
@@ -26,25 +25,12 @@ export default function MenuScreen() {
         columnWrapperStyle={{ gap: 10 }}
       />
     </View>
-  );
+  )
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'gainsboro'
+    backgroundColor: 'gainsboro',
   },
-  image: {
-    width: '100%',
-    aspectRatio: 1,
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: '600',
-    marginTop: 10,
-  },
-  price: {
-    fontSize: 16,
-    color: Colors.light.tint
-  },
-});
+})

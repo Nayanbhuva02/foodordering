@@ -3,11 +3,11 @@
 // This enables autocomplete, go to definition, etc.
 
 // Setup type definitions for built-in Supabase Runtime APIs
-import "jsr:@supabase/functions-js/edge-runtime.d.ts"
-import { stripe } from "../_utils/stripe.ts"
-import { createOrRetrieveProfile } from './../_utils/supabase.ts';
+import 'jsr:@supabase/functions-js/edge-runtime.d.ts'
+import { stripe } from '../_utils/stripe.ts'
+import { createOrRetrieveProfile } from './../_utils/supabase.ts'
 
-console.log("Hello from Functions!")
+console.log('Hello from Functions!')
 
 Deno.serve(async (req) => {
   try {
@@ -17,7 +17,7 @@ Deno.serve(async (req) => {
 
     const ephemeralKey = await stripe.ephemeralKeys.create(
       { customer: customer },
-      { apiVersion: '2020-08-27' }
+      { apiVersion: '2020-08-27' },
     )
 
     const paymentIntent = await stripe.paymentIntents.create({
@@ -28,19 +28,16 @@ Deno.serve(async (req) => {
 
     const res = {
       paymentIntent: paymentIntent.client_secret,
-      publishableKey: Deno.env.get("EXPO_PUBLIC_STRIPE_PUBLISHABLE_KEY"),
+      publishableKey: Deno.env.get('EXPO_PUBLIC_STRIPE_PUBLISHABLE_KEY'),
       customer: customer,
-      ephemeralKey: ephemeralKey.secret
+      ephemeralKey: ephemeralKey.secret,
     }
 
-    return new Response(
-      JSON.stringify(res),
-      { headers: { "Content-Type": "application/json" } },
-    )
+    return new Response(JSON.stringify(res), { headers: { 'Content-Type': 'application/json' } })
   } catch (error) {
     return new Response(JSON.stringify(error), {
       headers: { 'Content-Type': 'application/json' },
-      status: 400
+      status: 400,
     })
   }
 })
