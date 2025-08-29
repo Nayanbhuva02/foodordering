@@ -9,22 +9,26 @@ export const fetchPaymentSheetParams = async (amount: number) => {
         return data
     }
     Alert.alert("Error fetching payment sheet params");
+    console.log('error: ', error);
     return {}
 }
 
 export const initialiseStripePaymentSheet = async (amount: number) => {
     console.log('amount: ', amount);
-    const { paymentIntent, publishableKey } = await fetchPaymentSheetParams(amount);
+    const { paymentIntent, publishableKey, customer, ephemeralKey } = await fetchPaymentSheetParams(amount);
 
     if (!paymentIntent || !publishableKey) return
 
-    await initPaymentSheet({
+    const result = await initPaymentSheet({
         merchantDisplayName: "JustForFood",
         paymentIntentClientSecret: paymentIntent,
+        customerId: customer,
+        customerEphemeralKeySecret: ephemeralKey,
         defaultBillingDetails: {
             name: "test foodie"
         }
     })
+    console.log('result: ', result);
 }
 
 export const openPaymentSheet = async () => {

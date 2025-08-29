@@ -32,7 +32,7 @@ export default function MenuScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'grey'
+    backgroundColor: 'gainsboro'
   },
   image: {
     width: '100%',
