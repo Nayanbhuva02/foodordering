@@ -6,6 +6,7 @@ import { OrderStatusList } from 'types';
 import Colors from '@/constants/Colors';
 import { useOrderDetails, useUpdateOrder } from '@/api/orders';
 import { useUpdateOrderSubscription } from '@/api/orders/subscriptions';
+import { notifyUserAboutOrderUpdate } from '@/lib/notifications';
 
 const OrderDetailScreen = () => {
     const { id: idString } = useLocalSearchParams();
@@ -22,12 +23,17 @@ const OrderDetailScreen = () => {
         return <Text>Order not found!</Text>;
     }
 
-    const updateStatus = (status: string) => {
-        updateOrder({
+    const updateStatus = async (status: string) => {
+        await updateOrder({
             id, updatedField: {
                 status
             }
         })
+
+        console.log("notify to", order.user_id);
+        if (order) {
+            await notifyUserAboutOrderUpdate({ ...order, status })
+        }
     }
 
     return (
